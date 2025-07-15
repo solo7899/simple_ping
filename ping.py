@@ -47,7 +47,7 @@ async def main():
                 elapsed_times = map(lambda t: t.result(), tasks)
                 tasks_lists[url] =  elapsed_times 
 
-        display_output(tasks_lists)
+    display_output(tasks_lists)
 
 if __name__ == "__main__":
     asyncio.run(main())
