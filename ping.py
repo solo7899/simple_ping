@@ -24,6 +24,14 @@ def get_average_time(*times):
         return None
     return sum(valid_times) / len(valid_times)
 
+def display_output(tasks_lists):
+    for url, elapseds in tasks_lists.items():
+        average = get_average_time(*elapseds)
+        if average is None: 
+            print(f"{url:<15}: All request failed")
+        else:
+            print(f"{url:<15} : {average:.2f} second(s)")
+
 async def main():
     args = parse_args()
 
@@ -34,12 +42,7 @@ async def main():
                 elapseds = map(lambda t: t.result(), tasks)
                 tasks_lists[url] =  elapseds 
 
-    for url, elapseds in tasks_lists.items():
-        average = get_average_time(*elapseds)
-        if average is None: 
-            print(f"{url:<15}: All request failed")
-        else:
-            print(f"{url:<15} : {average:.2f} second(s)")
+        display_output(tasks_lists)
 
 if __name__ == "__main__":
     asyncio.run(main())
