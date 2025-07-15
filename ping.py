@@ -6,16 +6,20 @@ import httpx
 def parse_args():
     parser = argparse.ArgumentParser(description=" Ping one or multiple URL(s) and get the average response time for each website")
     parser.add_argument("url", help="URL(s) to ping; seperate multiple URLs with a comma")
+    parser.add_argument("-v", "--verbose", action="store_true", help="Verbose mode")
     
     return parser.parse_args()
 
-async def get_ping(client: httpx.AsyncClient, url:str):
+async def get_ping(client: httpx.AsyncClient, url:str, verbose):
     try:
         response = await  client.get(url if url.startswith("http") else f"http://{url}", follow_redirects=True)
+        if verbose:
+            print(f"Response for {url}: {response.status_code} - {response.elapsed.total_seconds()} seconds")
         response.raise_for_status()
         return response.elapsed.total_seconds()
     except httpx.HTTPStatusError as e: 
-        print(f"Error for {url}: {e}")
+        if verbose:
+            print(f"Error for {url}: {e}")
         return None
 
 def get_average_time(*times):
@@ -37,10 +41,10 @@ async def main():
 
     async with httpx.AsyncClient() as client:
         async with asyncio.TaskGroup() as tg:
-            tasks_lists = {url.strip():[tg.create_task(get_ping(client, url)) for _ in range(3)] for url in args.url.split(",")}
+            tasks_lists = {url.strip():[tg.create_task(get_ping(client, url, args.verbose)) for _ in range(3)] for url in args.url.split(",")}
         for url, tasks in tasks_lists.items():
-                elapseds = map(lambda t: t.result(), tasks)
-                tasks_lists[url] =  elapseds 
+                elapsed_times = map(lambda t: t.result(), tasks)
+                tasks_lists[url] =  elapsed_times 
 
         display_output(tasks_lists)
 
