@@ -22,6 +22,10 @@ async def get_ping(client: httpx.AsyncClient, url:str, verbose):
         if verbose:
             print(f"Error for {url}: {e}")
         return None
+    except httpx.RequestError as e:
+        if verbose:
+            print(f"Error for {url}: {e}")
+        return None
 
 def get_average_time(*times):
     valid_times = [t for t in times if t is not None]
@@ -50,4 +54,7 @@ async def main():
     display_output(tasks_lists)
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        pass
