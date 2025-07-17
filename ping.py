@@ -14,13 +14,13 @@ def parse_args():
 async def get_ping(client: httpx.AsyncClient, url:str, verbose):
     try:
         response = await  client.get(url if url.startswith("http") else f"http://{url}", follow_redirects=True)
+        response.raise_for_status()
         if verbose:
             print(f"Response for {url:<15}: {response.status_code:<5} - {response.elapsed.total_seconds():<5.2f} seconds")
-        response.raise_for_status()
         return response.elapsed.total_seconds()
     except httpx.HTTPStatusError as e: 
         if verbose:
-            print(f"Error for {url}: {e}")
+            print(f"Error for {url}: {e.response.status_code} - {e.response.reason_phrase}")
         return None
     except httpx.RequestError as e:
         if verbose:
