@@ -53,8 +53,12 @@ async def main():
 
     display_output(tasks_lists)
 
-if __name__ == "__main__":
+def run():
     try:
-        asyncio.run(main())
+            asyncio.run(main())
     except KeyboardInterrupt:
-        pass
+            pass
+
+
+if __name__ == "__main__":
+     run() 

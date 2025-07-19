@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "simple-async-ping"
+version = "0.0.1"
+dependencies = [
+    "httpx",
+]
+
+[project.scripts]
+aping = "ping:run"
