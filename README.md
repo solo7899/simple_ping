@@ -4,11 +4,11 @@ A Python CLI tool to asynchronously ping one or more websites and report the ave
 
 ## Features
 
-- Asynchronously ping one or multiple URLs.
-- Specify the number of pings per URL.
-- Verbose mode for detailed output.
-- Handles HTTP errors gracefully.
-- Displays average response time or failure message per URL.
+- Asynchronously ping one or multiple URLs
+- Specify the number of pings per URL
+- Verbose mode for detailed output
+- Handles HTTP errors gracefully
+- Displays average response time or failure message per URL
 
 ## Requirements
 
@@ -23,8 +23,16 @@ pip install httpx
 
 ## Usage
 
+You can run the script directly:
+
 ```sh
 python ping.py [-h] [-v] [-c COUNT] url
+```
+
+Or, if installed as a package (using the script entry point defined in `pyproject.toml`):
+
+```sh
+aping [-h] [-v] [-c COUNT] url
 ```
 
 ### Arguments
@@ -42,13 +50,13 @@ python ping.py [-h] [-v] [-c COUNT] url
 ### Example
 
 ```sh
-python ping.py google.com,github.com -c 5 -v
+aping google.com,github.com -c 5 -v
 ```
 
 ## Output
 
-- Shows average response time for each URL.
-- If all requests fail for a URL, displays an error message.
+- Shows average response time for each URL
+- If all requests fail for a URL, displays an error message
 
 ---
 

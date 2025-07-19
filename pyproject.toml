@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "simple-async-ping"
+name = "Async-Website-Ping-Tool"
 version = "0.0.1"
 dependencies = [
     "httpx",
